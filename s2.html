@@ -1,0 +1,1322 @@
+<!DOCTYPE HTML>
+
+<html>
+
+<head>
+    <title>TTL</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel=" shortcut icon" href="images/favicon.ico">
+    <link rel="icon" href="images/favicon.ico">
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <style>
+        @import url("https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700");
+        .shadow_right {
+            width: 90px;
+            height: 380px;
+            transition: all 300ms 200ms;
+            top: 0px;
+            position: absolute;
+            pointer-events: none;
+            box-shadow: 0px 0px 0px #303f45 inset;
+        }
+        
+        i {
+            transition: all .3s;
+            cursor: pointer;
+        }
+        
+        i:hover {
+            color: #44f5b7;
+        }
+        
+        .shadow_left {
+            width: 90px;
+            height: 380px;
+            transition: all 300ms 200ms;
+            top: 0px;
+            position: absolute;
+            right: 0;
+            pointer-events: none;
+            box-shadow: 0px 0px 0px #303f45 inset;
+        }
+        
+        .r_trim {
+            width: 260px;
+            height: 660px;
+            position: absolute;
+            left: 380px;
+            z-index: 2;
+            right: 0;
+            top: -82px;
+            margin: auto;
+            background: #ffffff;
+        }
+        
+        .l_trim {
+            width: 260px;
+            height: 660px;
+            position: absolute;
+            z-index: 2;
+            left: -640px;
+            right: 0;
+            top: -33px;
+            margin: auto;
+            background: #ffffff;
+        }
+        
+        body {
+            font-family: 'Open Sans', sans-serif;
+        }
+        
+        body .player_inner,
+        body .player_inner__middle .cube {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+        
+        body .player_inner__middle .cube_inner>div {
+            width: 380px;
+            height: 380px;
+            background: pink;
+            position: absolute;
+            transform-style: preserve-3D;
+        }
+        
+        body .player_inner {
+            background: #3a4e47;
+            width: 380px;
+            height: 640px;
+            border-radius: 6px;
+            perspective: 800px;
+            right: 60%;
+            box-shadow: 2px 2px 10px #000000, 2px 2px 1px #962faa;
+        }
+        
+        body .player_inner__top {
+            height: 70px;
+            padding: 24px;
+            background-image: url("images/a1.png");
+            background-size: 103% !important;
+            margin-bottom: 0px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        
+        body .player_inner__top i,
+        body .player_inner__top h1 {
+            position: relative;
+            color: white;
+            font-weight: 600;
+        }
+        
+        body .player_inner__top .t_left {
+            width: 25%;
+            float: left;
+        }
+        
+        body .player_inner__top .t_mid {
+            float: left;
+            text-align: center;
+            width: 50%;
+        }
+        
+        body .player_inner__top .t_mid h1 {
+            margin: 0;
+            font-size: 12px;
+        }
+        
+        body .player_inner__top .t_right {
+            float: right;
+            width: 25%;
+            text-align: right;
+        }
+        
+        body .player_inner__middle {
+            position: relative;
+            height: 380px;
+            background: #40555f;
+            box-shadow: 0px 0px 110px #181f23 inset;
+        }
+        
+        body .player_inner__middle .empty {
+            display: none;
+        }
+        
+        body .player_inner__middle input {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            background: transparent !important;
+            outline: none;
+            transition: all .3s;
+            width: 60px !important;
+            height: 50px !important;
+            line-height: 16px;
+        }
+        
+        body .player_inner__middle input:hover {
+            background: #00000061 !important;
+        }
+        
+        body .player_inner__middle input:hover:after {
+            color: #44f5b7 !important;
+        }
+        
+        body .player_inner__middle input:nth-of-type(1) {
+            width: 130px !important;
+            top: 40px;
+            height: 320px !important;
+        }
+        
+        body .player_inner__middle input:nth-of-type(1):hover {
+            background: none !important;
+        }
+        
+        body .player_inner__middle input:nth-of-type(1)::after {
+            font-family: 'Open Sans', sans-serif, 'fontawesome';
+            content: '\f001   Now Playing';
+            display: block;
+            left: 0 !important;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+        }
+        
+        body .player_inner__middle input:nth-of-type(2) {
+            display: none;
+        }
+        
+        body .player_inner__middle input:nth-of-type(2)::after {
+            font-family: 'fontawesome';
+            content: '\f001';
+            display: block;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        body .player_inner__middle input:nth-of-type(3) {
+            BORDER-TOP-LEFT-RADIUS: 50PX;
+            border-bottom-left-radius: 50px;
+        }
+        
+        body .player_inner__middle input:nth-of-type(3)::after {
+            font-family: 'fontawesome';
+            content: '\f028';
+            display: block;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+        }
+        
+        body .player_inner__middle input:nth-of-type(3):checked {
+            opacity: 0;
+            right: -50px;
+            box-shadow: 0px 0px 0px 100px #00000061;
+            pointer-events: none;
+        }
+        
+        body .player_inner__middle input:nth-of-type(3):checked+input+input+div>.cube_inner>.cube_inner__right i {
+            opacity: 1;
+            top: 8px;
+            transition: all .3s .3s;
+        }
+        
+        body .player_inner__middle input:nth-of-type(3):checked+input+input+div+div+div+div {
+            display: block;
+            box-shadow: 60px 10px 50px -17px #303f45 inset;
+        }
+        
+        body .player_inner__middle input:nth-of-type(3):checked+input+input+div+div+div+div+div {
+            display: block;
+            box-shadow: -60px 10px 50px -17px #303f45 inset;
+        }
+        
+        body .player_inner__middle input:nth-of-type(4) {
+            BORDER-TOP-right-RADIUS: 50PX;
+            border-bottom-right-radius: 50px;
+        }
+        
+        body .player_inner__middle input:nth-of-type(4)::after {
+            font-family: 'fontawesome';
+            content: '\f1de';
+            display: block;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            left: 4px;
+        }
+        
+        body .player_inner__middle input:nth-of-type(4):checked {
+            opacity: 0;
+            left: -50px;
+            pointer-events: none;
+            box-shadow: 0px 0px 0px 100px #00000061;
+        }
+        
+        body .player_inner__middle input:nth-of-type(4):checked+input+div+div+div+div {
+            display: block;
+            box-shadow: 60px 10px 50px -17px #303f45 inset;
+        }
+        
+        body .player_inner__middle input:nth-of-type(4):checked+input+div+div+div+div+div {
+            display: block;
+            box-shadow: -60px 10px 50px -17px #303f45 inset;
+        }
+        
+        body .player_inner__middle .trigger--1,
+        body .player_inner__middle .trigger--2,
+        body .player_inner__middle .trigger--3,
+        body .player_inner__middle .trigger--4 {
+            background: black;
+            width: 20px;
+            cursor: pointer;
+            height: 400px;
+            position: absolute;
+            z-index: 2;
+            margin: auto;
+            text-align: center;
+        }
+        
+        body .player_inner__middle .trigger--1::after,
+        body .player_inner__middle .trigger--2::after,
+        body .player_inner__middle .trigger--3::after,
+        body .player_inner__middle .trigger--4::after {
+            position: relative;
+            top: 18px;
+            left: -6px;
+            transition: all .3s;
+        }
+        
+        body .player_inner__middle .trigger--1 {
+            left: 0px;
+            right: auto;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            height: 40px;
+        }
+        
+        body .player_inner__middle .trigger--1:checked+input+.cube {
+            transform: translateY(-50%) rotateX(0) rotateY(30deg);
+            transform-origin: 200px 0px -200px;
+            transition: transform 300ms 200ms, transform-origin 0s;
+        }
+        
+        body .player_inner__middle .trigger--2 {
+            left: auto;
+            right: 0px;
+            top: 0;
+            bottom: 0;
+            width: 20px;
+            height: 40px;
+        }
+        
+        body .player_inner__middle .trigger--2:checked+input+input+.cube {
+            transform: translateY(-50%) rotateX(0) rotateY(-30deg);
+            transform-origin: 200px 0px -200px;
+            transition: transform 300ms 200ms, transform-origin 0s;
+        }
+        
+        body .player_inner__middle .trigger--3 {
+            left: 0;
+            right: 0;
+            top: 0px;
+            bottom: auto;
+            width: 40px;
+            height: 20px;
+        }
+        
+        body .player_inner__middle .trigger--3:checked+input+input+input+.cube {
+            transform: translateY(-50%) rotateX(0) rotateY(0);
+            transform-origin: 200px 200px -200px;
+            transition: transform 300ms 200ms, transform-origin 0s;
+        }
+        
+        body .player_inner__middle .trigger--4 {
+            left: 0;
+            right: 0;
+            top: 0px;
+            bottom: auto;
+            width: 40px;
+            height: 20px;
+        }
+        
+        body .player_inner__middle .trigger--4:checked+input+input+input+input+.cube {
+            transform: translateY(-50%) rotateX(0) rotateY(0);
+            transform-origin: 200px 200px -200px;
+            transition: transform 300ms 200ms, transform-origin 0s;
+        }
+        
+        body .player_inner__middle .cube {
+            top: 190px;
+            height: 380px;
+            transform-style: preserve-3D;
+            perspective-origin: 190px 190px;
+            transition: all 300ms 200ms cubic-bezier(0.1, 1.94, 0.32, 1.02), transform-origin 0ms;
+        }
+        
+        body .player_inner__middle .cube_inner {
+            height: 380px;
+            transform-style: preserve-3D;
+        }
+        
+        body .player_inner__middle .cube_inner>div:nth-of-type(1) {
+            background: #ffb6c3;
+        }
+        
+        body .player_inner__middle .cube_inner>div:nth-of-type(2) {
+            background: #ffacba;
+        }
+        
+        body .player_inner__middle .cube_inner>div:nth-of-type(3) {
+            background: #ffa1b2;
+        }
+        
+        body .player_inner__middle .cube_inner>div:nth-of-type(4) {
+            background: #ff97a9;
+        }
+        
+        body .player_inner__middle .cube_inner__front {
+            background-image: url("images/a3.png") !important;
+            background-size: 103% !important;
+            background-position-y: -5px !important;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars {
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            transform: rotatez(180deg);
+            width: 100%;
+            z-index: 1;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar {
+            width: 10px;
+            background: white;
+            opacity: 0.1;
+            float: left;
+            width: 10%;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(1) {
+            animation: eq 1s 29ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(2) {
+            animation: eq 1s 22ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(3) {
+            animation: eq 1s 114ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(4) {
+            animation: eq 1s 156ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(5) {
+            animation: eq 1s 185ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(6) {
+            animation: eq 1s 186ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(7) {
+            animation: eq 1s 189ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(8) {
+            animation: eq 1s 144ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(9) {
+            animation: eq 1s 279ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(10) {
+            animation: eq 1s 330ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(11) {
+            animation: eq 1s 121ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(12) {
+            animation: eq 1s 432ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(13) {
+            animation: eq 1s 429ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(14) {
+            animation: eq 1s 294ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(15) {
+            animation: eq 1s 390ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(16) {
+            animation: eq 1s 576ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(17) {
+            animation: eq 1s 374ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(18) {
+            animation: eq 1s 252ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(19) {
+            animation: eq 1s 437ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(20) {
+            animation: eq 1s 760ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(21) {
+            animation: eq 1s 483ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(22) {
+            animation: eq 1s 418ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(23) {
+            animation: eq 1s 598ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(24) {
+            animation: eq 1s 288ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(25) {
+            animation: eq 1s 125ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(26) {
+            animation: eq 1s 234ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(27) {
+            animation: eq 1s 81ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(28) {
+            animation: eq 1s 616ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(29) {
+            animation: eq 1s 493ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(30) {
+            animation: eq 1s 180ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(31) {
+            animation: eq 1s 620ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(32) {
+            animation: eq 1s 576ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(33) {
+            animation: eq 1s 1254ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(34) {
+            animation: eq 1s 782ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(35) {
+            animation: eq 1s 1190ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(36) {
+            animation: eq 1s 900ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(37) {
+            animation: eq 1s 925ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(38) {
+            animation: eq 1s 228ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(39) {
+            animation: eq 1s 117ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(40) {
+            animation: eq 1s 1200ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(41) {
+            animation: eq 1s 1599ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(42) {
+            animation: eq 1s 126ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(43) {
+            animation: eq 1s 387ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(44) {
+            animation: eq 1s 1056ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(45) {
+            animation: eq 1s 90ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(46) {
+            animation: eq 1s 1564ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(47) {
+            animation: eq 1s 987ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(48) {
+            animation: eq 1s 1680ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(49) {
+            animation: eq 1s 1470ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(50) {
+            animation: eq 1s 1500ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(51) {
+            animation: eq 1s 1479ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(52) {
+            animation: eq 1s 2028ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(53) {
+            animation: eq 1s 1908ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(54) {
+            animation: eq 1s 864ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(55) {
+            animation: eq 1s 825ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(56) {
+            animation: eq 1s 1176ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(57) {
+            animation: eq 1s 399ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(58) {
+            animation: eq 1s 1276ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(59) {
+            animation: eq 1s 649ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(60) {
+            animation: eq 1s 1320ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(61) {
+            animation: eq 1s 2257ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(62) {
+            animation: eq 1s 1302ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(63) {
+            animation: eq 1s 1197ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(64) {
+            animation: eq 1s 2560ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(65) {
+            animation: eq 1s 2535ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(66) {
+            animation: eq 1s 792ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(67) {
+            animation: eq 1s 2010ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(68) {
+            animation: eq 1s 544ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(69) {
+            animation: eq 1s 345ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(70) {
+            animation: eq 1s 1260ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(71) {
+            animation: eq 1s 1846ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(72) {
+            animation: eq 1s 432ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(73) {
+            animation: eq 1s 584ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(74) {
+            animation: eq 1s 1480ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(75) {
+            animation: eq 1s 525ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(76) {
+            animation: eq 1s 2964ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(77) {
+            animation: eq 1s 385ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(78) {
+            animation: eq 1s 468ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(79) {
+            animation: eq 1s 3002ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(80) {
+            animation: eq 1s 1520ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(81) {
+            animation: eq 1s 891ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(82) {
+            animation: eq 1s 1886ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(83) {
+            animation: eq 1s 996ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(84) {
+            animation: eq 1s 504ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(85) {
+            animation: eq 1s 425ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(86) {
+            animation: eq 1s 1892ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(87) {
+            animation: eq 1s 1740ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(88) {
+            animation: eq 1s 352ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(89) {
+            animation: eq 1s 2492ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(90) {
+            animation: eq 1s 900ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(91) {
+            animation: eq 1s 2639ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(92) {
+            animation: eq 1s 1840ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(93) {
+            animation: eq 1s 2418ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(94) {
+            animation: eq 1s 1316ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(95) {
+            animation: eq 1s 1520ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(96) {
+            animation: eq 1s 1056ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(97) {
+            animation: eq 1s 1164ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(98) {
+            animation: eq 1s 1764ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(99) {
+            animation: eq 1s 3564ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .bars_bar:nth-of-type(100) {
+            animation: eq 1s 3300ms infinite ease-in-out;
+        }
+        
+        body .player_inner__middle .cube_inner__front .details {
+            position: absolute;
+            z-index: 10;
+            width: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            color: white;
+            text-align: center;
+        }
+        
+        body .player_inner__middle .cube_inner__front .details_album {
+            width: 120px;
+            height: 54px;
+            background-size: cover !important;
+            background: white;
+            border-radius: 4px;
+            margin: 0 auto;
+            background-image: url("images/ttllogo.png");
+            margin-top: 60%;
+            background-repeat: no-repeat;
+            margin-bottom: 20px;
+        }
+        
+        body .player_inner__middle .cube_inner__front .details h2 {
+            font-size: 12px;
+            font-weight: 600;
+            margin: 0;
+        }
+        
+        body .player_inner__middle .cube_inner__front .details h3 {
+            font-size: 12px;
+            margin: 0;
+            opacity: 0.6;
+            font-weight: 400;
+        }
+        
+        body .player_inner__middle .cube_inner__top {
+            transform: rotateX(-90deg);
+            transform-origin: 0 0;
+            background: yellow !important;
+        }
+        
+        body .player_inner__middle .cube_inner__bottom {
+            transform: rotateX(90deg);
+            background: purple !important;
+            transform-origin: 0 380px;
+        }
+        
+        body .player_inner__middle .cube_inner__left {
+            background: #354752 !important;
+            transform: rotateY(90deg);
+            transform-origin: 0 0;
+        }
+        
+        body .player_inner__middle .cube_inner__left .options {
+            left: 150px;
+            top: 60px;
+            position: absolute;
+            transform: rotatey(254deg) translatez(57px);
+        }
+        
+        body .player_inner__middle .cube_inner__left .options i {
+            color: white;
+            font-size: 24px;
+            display: block;
+            margin-bottom: 53px;
+            transition: all .3s;
+            cursor: pointer;
+        }
+        
+        body .player_inner__middle .cube_inner__left .options i:hover {
+            color: #44f5b7;
+        }
+        
+        body .player_inner__middle .cube_inner__right {
+            background: #354752 !important;
+            transform: rotateY(-90deg);
+            transform-origin: 380px 0;
+        }
+        
+        body .player_inner__middle .cube_inner__right .volume {
+            left: 210px;
+            top: 60px;
+            position: absolute;
+        }
+        
+        body .player_inner__middle .cube_inner__right .volume_pip {
+            width: 40px;
+            height: 6px;
+            margin-bottom: 10px;
+            background: #ffffff2e;
+        }
+        
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(14),
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(13),
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(12),
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(11) {
+            background: #44f5b7;
+        }
+        
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(10),
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(9),
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(8),
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(7) {
+            background: #f5c844;
+        }
+        
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(6),
+        body .player_inner__middle .cube_inner__right .volume_pip:nth-of-type(5) {
+            background: #f54444;
+        }
+        
+        body .player_inner__middle .cube_inner__right .volume i {
+            transform: rotatez(180deg) rotatey(89deg);
+            color: white;
+            font-size: 20px;
+            position: relative;
+            left: 10px;
+            top: 24px;
+            opacity: 0;
+            transition: all .3s;
+        }
+        
+        body .player_inner__bottom {
+            height: 190px;
+            padding: 30px;
+            background-image: url("images/a1.png");
+        }
+        
+        body .player_inner__bottom .controls {
+            clear: left;
+            margin-top: 26px;
+        }
+        
+        body .player_inner__bottom .controls_left {
+            float: left;
+            width: 30%;
+            text-align: right;
+            font-size: 20px;
+            color: white;
+            position: relative;
+            top: 20px;
+        }
+        
+        body .player_inner__bottom .controls_middle {
+            float: left;
+            width: 40%;
+            font-size: 50px;
+            color: white;
+            text-align: center;
+        }
+        
+        body .player_inner__bottom .controls_right {
+            float: right;
+            position: relative;
+            top: 20px;
+            width: 30%;
+            font-size: 20px;
+            color: white;
+            text-align: left;
+        }
+        
+        body .player_inner__bottom .options {
+            text-align: center;
+            color: white;
+            font-size: 12px;
+            margin-bottom: 20px;
+        }
+        
+        body .player_inner__bottom .options i {
+            padding: 5px;
+        }
+        
+        body .player_inner__bottom .options i:nth-of-type(1) {
+            color: #44f5b7;
+        }
+        
+        body .player_inner__bottom .options i:nth-of-type(2) {
+            opacity: 0.4;
+        }
+        
+        body .player_inner__bottom .playbar {
+            width: 100%;
+            background: #2c3e38;
+            height: 4px;
+            position: relative;
+            border-radius: 10px;
+        }
+        
+        body .player_inner__bottom .playbar_inner {
+            position: absolute;
+            width: 40%;
+            height: 100%;
+            border-radius: 10px;
+            background: #44f5b7;
+        }
+        
+        body .player_inner__bottom .playbar_left {
+            float: left;
+            position: relative;
+            top: 8px;
+        }
+        
+        body .player_inner__bottom .playbar_right {
+            position: relative;
+            top: 8px;
+            float: right;
+        }
+        
+        body .player_inner__bottom .playbar span {
+            color: white;
+            font-size: 10px;
+        }
+        
+        @keyframes eq {
+            0% {
+                height: 30px;
+            }
+            50% {
+                height: 100px;
+            }
+            100% {
+                height: 30px;
+            }
+        }
+    </style>
+</head>
+
+<body class="subpage">
+
+    <!-- Header -->
+    <header id="header">
+        <h1><a href="index.html">#TTL</a></h1>
+        <a href="#menu">#MENU</a>
+    </header>
+
+    <!-- Nav -->
+    <nav id="menu">
+        <ul class="links">
+            <li><a href="index.html">#HOME</a></li>
+            <li><a href="info.html">#WHOWEARE</a></li>
+            <li><a href="coll.html">#COLLABORATION</a></li>
+            <li><a href="alb.html">#ALBUMS</a></li>
+            <li><a href="#">#SONGS</a></li>
+            <nav id="songs.html">
+                <ul class="links">
+                    <li><a href="songs.html">hoTTeL</a></li>
+                    <li><a href="s2.html">Passport _ TTLand</a></li>
+                    <li><a href="s3.html">Stella</a></li>
+                </ul>
+            </nav>
+            <li><a href="films.html">#FILMS</a></li>
+            <li><a href="order.html">#ORDER</a></li>
+        </ul>
+    </nav>
+
+    <!-- Main -->
+    <div id="main">
+
+        <!-- One -->
+        <section class="wrapper style1" style="height: 2000px; display: flex;">
+            <div class='player' style=" margin-right: 50%; width: 100px;">
+                <div class='player_inner' style="top: 500px;">
+                    <div class='player_inner__top'>
+                        <div class='t_left'>
+                            <i class='fa fa-bars'></i>
+                        </div>
+                        <div class='t_mid'>
+                            <h1>TTL - Player</h1>
+                        </div>
+                        <div class='t_right'>
+                            <i class='fa fa-search'></i>
+                        </div>
+                    </div>
+                    <div class='player_inner__middle'>
+                        <input class='trigger--4' name='omni' type='radio'>
+                        <input class='trigger--3' name='omni' type='radio'>
+                        <input class='trigger--2' name='omni' type='radio'>
+                        <input class='trigger--1' name='omni' type='radio'>
+                        <input class='empty'>
+                        <div class='cube'>
+                            <div class='cube_inner'>
+                                <div class='cube_inner__front'>
+                                    <div class='bars'>
+                                    </div>
+                                    <div class='details'>
+                                        <div class='details_album'></div>
+                                        <h2>Sink Or Swim</h2>
+                                        <h3>TTL's album - Passport _ TTLand</h3>
+                                    </div>
+                                </div>
+                                <div class='cube_inner__left'>
+                                    <div class='options'>
+                                        <i class='fa fa-headphones'></i>
+                                        <i class='fa fa-redo-alt'></i>
+                                        <i class='fa fa-random'></i>
+                                        <i class='fa fa-fast-forward'></i>
+                                        <i class='fa fa-music'></i>
+                                    </div>
+                                </div>
+                                <div class='cube_inner__right'>
+                                    <div class='volume'>
+                                        <i class='fa fa-volume-up'></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class='r_trim'></div>
+                        <div class='l_trim'></div> -->
+                        <div class='shadow_right'></div>
+                        <div class='shadow_left'></div>
+                    </div>
+                    <div class='player_inner__bottom'>
+                        <div class='options'>
+                            <i class='fa fa-repeat'></i>
+                            <i class='fa fa-random'></i>
+                        </div>
+                        <div class='playbar'>
+                            <div class='playbar_inner'></div>
+                            <div class='playbar_left'>
+                                <span>0:00</span>
+                            </div>
+                            <div class='playbar_right'>
+                                <span>3:45</span>
+                            </div>
+                        </div>
+                        <div class='controls'>
+                            <div class='controls_left'>
+                                <i class='fa fa-step-backward'></i>
+                            </div>
+                            <div class='controls_middle'>
+                                <i class='fa fa-play-circle'></i>
+                            </div>
+                            <div class='controls_right'>
+                                <i class='fa fa-step-forward'></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="one" style="width: 100px; display: flex; justify-content: center; align-items: center; background-size: cover; flex-direction: column; bottom: 500px;">
+                <div class="container" style="filter: drop-shadow(5px 5px 5px #fcef7e); width: 550px; margin-bottom: 150px;">
+                    <div class="title3">
+                        <h1 style="color: white;">🎼TTL Playlist - Passport _ TTLand</h1>
+                    </div>
+                    <div class="list3">
+                        <div class="item3" style="border-top:1px solid white ;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Sink Or Swim</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                    <source src="audio/n.mp3" type="audio/mp3">
+                                </audio>
+
+                            </span>
+                        </div>
+                        <div class="item3">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Hey You</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n2.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Gentleman</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n3.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Dial</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n4.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">光(광)</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n5.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Between</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n6.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Wave</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n7.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Fall In Love</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n8.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">5</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n9.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">AGIT</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n10.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Fade In Out</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n11.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Step</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n12.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Say GoodBye</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n13.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">약속</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n14.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">오늘의 날씨</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n15.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">전우치</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n16.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">EVE</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n17.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">비행(B Line)</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n18.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">[Outro] 7th Recall</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n19.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">[月光乱舞 (Diversified Cover)</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n20.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">도망가지마(cover)</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n21.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+                        <div class="item3" style="border-bottom:1px solid white;">
+                            <MARQUEE id="11" onmouseover="this.stop();" onmouseout="this.start();" style="width: 250px;"><span class="song-title">Good Bye Summer(cover)</span></MARQUEE>
+                            <span class="song-artist"><audio controls>
+                                <source src="audio/n22.mp3" type="audio/mp3">
+                            </audio></span>
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+
+    </div>
+
+    <!-- Footer -->
+    <footer id="footer">
+
+        <div class="copyright">
+            <ul class="icons">
+                <li><a href="https://www.youtube.com/channel/UCo4ahoJXfzTEgxDG8p3PcNA" target="_blank" class="icon fa-youtube"><span class="label">youtube</span></a></li>
+                <li><a href="https://www.facebook.com/TTLent" target="_blank" class="icon fa-facebook"><span class="label">Facebook</span></a></li>
+                <li><a href="https://soundcloud.com/user-976455764" target="_blank" class="icon fa-soundcloud"><span class="label">soundcloud</span></a></li>
+            </ul>
+            &copy; Untitled. Design: <a href="#">TTL</a>. Images: <a href="#">TTL</a>. Video: <a href="#">TTL</a>.
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/jquery.scrolly.min.js"></script>
+    <script src="assets/js/skel.min.js"></script>
+    <script src="assets/js/util.js"></script>
+    <script src="assets/js/main.js"></script>
+
+</body>
+
+</html>
